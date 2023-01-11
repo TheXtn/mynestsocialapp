@@ -18,8 +18,8 @@ export class AuthService {
     const result = await bcrypt.compare(pwd, hash);
     return result;
   }
-  async signToken(argrs: { email: string; id: string }) {
-    return this.jwt.signAsync(argrs, { secret: jwtSecret });
+  async signToken(args: { email: string; id: string }) {
+    return this.jwt.signAsync(args, { secret: jwtSecret });
   }
   async create(createUserDto: CreateUserDto) {
     const hashedPassword = await this.hashPwd(createUserDto.password);
@@ -35,6 +35,9 @@ export class AuthService {
         email,
       },
     });
+    if (!user) {
+      return new BadRequestException('Wrong login');
+    }
     const checkUser = await this.comparePwd(
       loginUserDto.password,
       user.password,

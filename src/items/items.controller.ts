@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Request,
   UseFilters,
 } from '@nestjs/common';
 import { ItemsService } from './items.service';
@@ -15,6 +16,7 @@ import { PrismaClientExceptionFilter } from 'src/prisma-client-exception/prisma-
 import { ApiTags } from '@nestjs/swagger';
 import { UseGuards } from '@nestjs/common/decorators';
 import { JwtAuthGuard } from 'src/auth/jwt.guard';
+import { Me } from 'src/auth/current-user.guard';
 
 @Controller('items')
 @UseFilters(PrismaClientExceptionFilter)
@@ -24,8 +26,14 @@ export class ItemsController {
   constructor(private readonly itemsService: ItemsService) {}
 
   @Post()
-  create(@Body() createItemDto: CreateItemDto) {
-    return this.itemsService.create(createItemDto);
+  create(
+    @Me() me: { id: string; email: string },
+    @Body() createItemDto: CreateItemDto,
+  ) {
+    return this.itemsService.create({
+      ...createItemDto,
+      authorEmail: me.email,
+    });
   }
 
   @Get()

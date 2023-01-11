@@ -8,7 +8,15 @@ import { NotFoundException } from '@nestjs/common/exceptions';
 export class ItemsService {
   constructor(private prisma: PrismaService) {}
   create(createItemDto: CreateItemDto) {
-    return this.prisma.item.create({ data: createItemDto });
+    return this.prisma.item.create({
+      data: {
+        title: createItemDto.title,
+        desc: createItemDto.desc,
+        author: {
+          connect: { email: createItemDto.authorEmail },
+        },
+      },
+    });
   }
 
   findAll() {
