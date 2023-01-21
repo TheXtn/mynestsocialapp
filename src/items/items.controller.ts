@@ -17,7 +17,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { UseGuards } from '@nestjs/common/decorators';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { Me } from '../auth/guards/current-user.guard';
-import { OwnerGuard } from 'src/auth/guards/check-owner.guard';
+import { OwnerGuard } from '../auth/guards/check-owner.guard';
 import { ItemNotFoundGuard } from './guards/resource-not-found.guard';
 @Controller('items')
 @UseFilters(PrismaClientExceptionFilter)

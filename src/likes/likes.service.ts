@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { ItemsService } from 'src/items/items.service';
+import { PrismaService } from '../prisma/prisma.service';
+import { ItemsService } from '../items/items.service';
 import { BadRequestException } from '@nestjs/common/exceptions';
 @Injectable()
 export class LikesService {

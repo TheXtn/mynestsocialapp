@@ -12,9 +12,9 @@ import { CreateLikeDto } from './dto/create-like.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { PrismaClientExceptionFilter } from '../prisma-client-exception/prisma-client-exception.filter';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import { Me } from 'src/auth/guards/current-user.guard';
+import { Me } from '../auth/guards/current-user.guard';
 import { LikeNotFoundGuard } from './guards/resource-not-found.guard';
-import { ItemNotFoundGuard } from 'src/items/guards/resource-not-found.guard';
+import { ItemNotFoundGuard } from '../items/guards/resource-not-found.guard';
 
 @Controller('likes')
 @ApiTags('Likes')

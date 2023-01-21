@@ -1,11 +1,11 @@
 import { Controller, Post, Body, Param, Delete } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
-import { Me } from 'src/auth/guards/current-user.guard';
+import { Me } from '../auth/guards/current-user.guard';
 import { UseGuards } from '@nestjs/common/decorators';
-import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { ApiTags } from '@nestjs/swagger';
-import { ItemNotFoundGuard } from 'src/items/guards/resource-not-found.guard';
+import { ItemNotFoundGuard } from '../items/guards/resource-not-found.guard';
 import { CommentNotFoundGuard } from './guards/resource-not-found.guard';
 
 @Controller('comments')
