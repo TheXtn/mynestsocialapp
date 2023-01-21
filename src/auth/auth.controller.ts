@@ -1,24 +1,10 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Req,
-  Res,
-  Request,
-  Response,
-} from '@nestjs/common';
+import { Controller, Post, Body, Request, Response } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { UseFilters, UseGuards } from '@nestjs/common/decorators';
-import { PrismaClientExceptionFilter } from 'src/prisma-client-exception/prisma-client-exception.filter';
+import { UseFilters } from '@nestjs/common/decorators';
+import { PrismaClientExceptionFilter } from '../prisma-client-exception/prisma-client-exception.filter';
 import { LoginUserDto } from './dto/login-user.dto';
-import { JwtAuthGuard } from './jwt.guard';
 
 @Controller('auth')
 @ApiTags('Auth')

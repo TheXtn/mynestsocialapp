@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { CreateItemDto } from './dto/create-item.dto';
 import { UpdateItemDto } from './dto/update-item.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { NotFoundException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class ItemsService {
   constructor(private prisma: PrismaService) {}
-  create(createItemDto: CreateItemDto) {
-    return this.prisma.item.create({
+  async create(createItemDto: CreateItemDto) {
+    return await this.prisma.item.create({
       data: {
         title: createItemDto.title,
         desc: createItemDto.desc,
@@ -18,25 +18,64 @@ export class ItemsService {
       },
     });
   }
-
-  findAll() {
-    return this.prisma.item.findMany();
+  async findAll() {
+    const items = await this.prisma.item.findMany({
+      include: {
+        author: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+    return await items;
   }
 
-  findOne(id: string) {
-    const item = this.prisma.item.findUnique({
+  async findOne(id: string) {
+    const item = await this.prisma.item.findUnique({
       where: {
         id,
       },
+      include: {
+        comments: {
+          select: {
+            id: true,
+            body: true,
+            createdAt: true,
+            author: {
+              select: {
+                email: true,
+                name: true,
+              },
+            },
+          },
+        },
+        likes: {
+          select: {
+            id: true,
+            createdAt: true,
+            liker: {
+              select: {
+                email: true,
+                name: true,
+              },
+            },
+          },
+        },
+        author: {
+          select: {
+            email: true,
+            id: true,
+          },
+        },
+      },
     });
-    if (!item) {
-      return new NotFoundException('Item not exist');
-    }
     return item;
   }
 
-  update(id: string, updateItemDto: UpdateItemDto) {
-    return this.prisma.item.update({
+  async update(id: string, updateItemDto: UpdateItemDto) {
+    return await this.prisma.item.update({
       data: updateItemDto,
       where: {
         id,
@@ -44,8 +83,8 @@ export class ItemsService {
     });
   }
 
-  remove(id: string) {
-    return this.prisma.item.delete({
+  async remove(id: string) {
+    return await this.prisma.item.delete({
       where: {
         id,
       },
