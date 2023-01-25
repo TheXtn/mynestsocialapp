@@ -1,5 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
+  engineType = "binary"
+  binaryTargets=["windows"]
 }
 
 datasource db {
@@ -29,6 +31,7 @@ model user {
   items     item[]
   likes     like[]
   comments  comment[]
+  role role @default(BASIC)
 }
 
 model like {
@@ -50,4 +53,8 @@ model comment {
   originItemId String   @db.ObjectId
   author       user     @relation(references: [id], fields: [authorId], onDelete: Cascade)
   originItem   item     @relation(references: [id], fields: [originItemId], onDelete: Cascade)
+}
+enum role {
+  BASIC
+  ADMIN
 }

@@ -17,7 +17,7 @@ export class AuthService {
     const result = await bcrypt.compare(pwd, hash);
     return result;
   }
-  async signToken(args: { email: string; id: string }) {
+  async signToken(args: { email: string; id: string; role: string }) {
     return this.jwt.signAsync(args, { secret: jwtSecret });
   }
   async create(createUserDto: CreateUserDto) {
@@ -47,8 +47,16 @@ export class AuthService {
     const token = await this.signToken({
       email: user.email,
       id: user.id,
+      role: user.role,
     });
-    res.cookie('token', token);
+    res.header('Access-Control-Allow-Origin', 'http://localhost:4000');
+    res.cookie('token', token, {
+      secure: true,
+      httpOnly: true,
+      expires: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 7),
+      sameSite: 'none',
+      domain: process.env.apiDomain,
+    });
     return { message: 'Logged in successfully' };
   }
   async logout(req: Request, res: Response) {

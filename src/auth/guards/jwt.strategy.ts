@@ -12,7 +12,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       jwtFromRequest: ExtractJwt.fromExtractors([
         JwtStrategy.extractJWT,
       ]),
-      secretOrKey: process.env.jwtSecret,
+      secretOrKey: jwtSecret,
     });
   }
 
