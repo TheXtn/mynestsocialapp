@@ -9,7 +9,14 @@ import { LikesModule } from './likes/likes.module';
 import { CommentsModule } from './comments/comments.module';
 
 @Module({
-  imports: [PrismaModule, ItemsModule, AuthModule, UsersModule, LikesModule, CommentsModule],
+  imports: [
+    PrismaModule,
+    ItemsModule,
+    AuthModule,
+    UsersModule,
+    LikesModule,
+    CommentsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
