@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcryptjs';
@@ -49,18 +50,12 @@ export class AuthService {
       id: user.id,
       role: user.role,
     });
-    res.header('Access-Control-Allow-Origin', 'http://localhost:4000');
-    res.cookie('token', token, {
-      secure: true,
-      httpOnly: true,
-      expires: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 7),
-      sameSite: 'none',
-      domain: process.env.apiDomain,
-    });
-    return { message: 'Logged in successfully' };
+    res.header('Access-Control-Allow-Origin', '*');
+    res.cookie('token', token);
+    return { message: 'Logged in successfully.' };
   }
   async logout(req: Request, res: Response) {
     res.clearCookie('token');
-    return { message: 'Logged out successfully' };
+    return { message: 'Logged out successfully.' };
   }
 }

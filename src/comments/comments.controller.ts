@@ -7,6 +7,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { ItemNotFoundGuard } from '../items/guards/resource-not-found.guard';
 import { CommentNotFoundGuard } from './guards/resource-not-found.guard';
+import { RemoveGuard } from './guards/crud.guard';
 
 @Controller('comments')
 @UseGuards(JwtAuthGuard)
@@ -28,6 +29,7 @@ export class CommentsController {
 
   @Delete(':id')
   @UseGuards(CommentNotFoundGuard)
+  @UseGuards(RemoveGuard)
   remove(@Param('id') id: string) {
     return this.commentsService.remove(id);
   }

@@ -1,8 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Injectable, NotFoundException, CanActivate, Inject, ExecutionContext } from '@nestjs/common';
 
-import { Request } from 'express';
-import { Observable } from 'rxjs';
 import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()

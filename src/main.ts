@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -5,7 +6,7 @@ import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    cors: { credentials: true, origin: 'http://localhost:4000' },
+    cors: { credentials: true, origin: '*' },
   });
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
