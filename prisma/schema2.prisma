@@ -22,15 +22,12 @@ model User {
     tags          Tag[]
     profileImages ProfileImage[]
     profileVideos ProfileVideo[]
-    profile Profile?
 }
 
 model Profile {
     profileId      String  @id @default(auto()) @map("_id") @db.ObjectId
     profilePicture String?
     displayName    String?
-    userId String @db.ObjectId @unique
-    user User @relation(references: [id],fields: [userId])
 }
 
 model Tag {

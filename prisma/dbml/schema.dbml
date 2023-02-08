@@ -1,0 +1,52 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table User {
+  id String [pk]
+  email String [unique]
+  password String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  tags Tag [not null]
+  profileImages ProfileImage [not null]
+  profileVideos ProfileVideo [not null]
+  profile Profile
+}
+
+Table Profile {
+  profileId String [pk]
+  profilePicture String
+  displayName String
+  userId String [unique, not null]
+  user User [not null]
+}
+
+Table Tag {
+  id String [pk]
+  name String [not null]
+  userId String [not null]
+  tager User [not null]
+}
+
+Table ProfileImage {
+  id String [pk]
+  link String [not null]
+  userId String [not null]
+  owner User [not null]
+}
+
+Table ProfileVideo {
+  id String [pk]
+  link String [not null]
+  userId String [not null]
+  owner User [not null]
+}
+
+Ref: Profile.userId - User.id
+
+Ref: Tag.userId > User.id
+
+Ref: ProfileImage.userId > User.id
+
+Ref: ProfileVideo.userId > User.id
